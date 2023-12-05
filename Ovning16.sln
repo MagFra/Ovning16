@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagFra_Gym.Gymbokning", "MagFra_Gym.Gymbokning\MagFra_Gym.Gymbokning.csproj", "{DCBFAACE-57A6-47DB-B7C9-BD28C69D07F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCBFAACE-57A6-47DB-B7C9-BD28C69D07F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCBFAACE-57A6-47DB-B7C9-BD28C69D07F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCBFAACE-57A6-47DB-B7C9-BD28C69D07F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCBFAACE-57A6-47DB-B7C9-BD28C69D07F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6556BF47-BDD0-43AE-9D48-F61976DE4FA7}
+	EndGlobalSection
+EndGlobal
