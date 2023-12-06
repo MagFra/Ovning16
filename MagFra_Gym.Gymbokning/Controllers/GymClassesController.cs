@@ -7,17 +7,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MagFra_Gym.Gymbokning.Data;
 using MagFra_Gym.Gymbokning.Models.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MagFra_Gym.Gymbokning.Controllers
 {
     public class GymClassesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public GymClassesController(ApplicationDbContext context)
+        public GymClassesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
+        //#####################################################################################
 
         // GET: GymClasses
         public async Task<IActionResult> Index()
@@ -25,23 +31,25 @@ namespace MagFra_Gym.Gymbokning.Controllers
             return View(await _context.GymClass.ToListAsync());
         }
 
+        //#####################################################################################
+
         // GET: GymClasses/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return RedirectToAction(nameof(Index));
 
-            var gymClass = await _context.GymClass
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (gymClass == null)
-            {
-                return NotFound();
-            }
+            var gymClassWithAtendees = await _context.GymClass
+                .Where(m => m.Id == id)
+                .Include(a => a.UserGymClasses)
+                .ThenInclude(c => c.applicationUser)
+                .FirstOrDefaultAsync();
 
-            return View(gymClass);
+            if (gymClassWithAtendees == null) return RedirectToAction(nameof(Index));
+
+            return View(gymClassWithAtendees);
         }
+
+        //#####################################################################################
 
         // GET: GymClasses/Create
         public IActionResult Create()
@@ -65,6 +73,8 @@ namespace MagFra_Gym.Gymbokning.Controllers
             }
             return View(gymClass);
         }
+
+        //#####################################################################################
 
         // GET: GymClasses/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
@@ -117,6 +127,8 @@ namespace MagFra_Gym.Gymbokning.Controllers
             return View(gymClass);
         }
 
+        //#####################################################################################
+
         // GET: GymClasses/Delete/5
         public async Task<IActionResult> Delete(Guid? id)
         {
@@ -150,9 +162,41 @@ namespace MagFra_Gym.Gymbokning.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //#####################################################################################
+
         private bool GymClassExists(Guid id)
         {
             return _context.GymClass.Any(e => e.Id == id);
+        }
+
+        //#####################################################################################
+
+        [Authorize]
+        public async Task<IActionResult> BookingToogle(Guid? id)
+        {
+            if (id == null) return RedirectToAction(nameof(Index)); //ToDo: Send a "explonaton" to the View.
+
+            var userId = _userManager.GetUserId(User);
+            if (userId == null) return RedirectToAction(nameof(Index)); //ToDo: Send a "explonaton" to the View.
+
+            var attending = await _context.ApplicationUserGymClass
+                .FirstOrDefaultAsync(a => a.applicationUserId.Equals(userId) && a.gymClassId == id);
+
+            if (attending != null)
+            {
+                _context.Remove(attending);
+            }
+            else
+            {
+                var bookin = new ApplicationUserGymClass
+                {
+                    applicationUserId = userId,
+                    gymClassId = (Guid)id
+                };
+                _context.ApplicationUserGymClass.Add(bookin);
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

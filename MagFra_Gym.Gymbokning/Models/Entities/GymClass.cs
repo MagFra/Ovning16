@@ -15,6 +15,6 @@ namespace MagFra_Gym.Gymbokning.Models.Entities
 
 
 
-        ICollection<ApplicationUserGymClass> UserGymClasses { get; set; } = new List<ApplicationUserGymClass>();
+        public ICollection<ApplicationUserGymClass> UserGymClasses { get; set; } = new List<ApplicationUserGymClass>();
     }
 }
