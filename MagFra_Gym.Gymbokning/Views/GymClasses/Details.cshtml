@@ -37,38 +37,46 @@
     </dl>
 </div>
 @{
-    if (Model.UserGymClasses.Count == 0)
+    if (User.Identity is not null && User.Identity.IsAuthenticated)
     {
-        <h4>No attendees!</h4>
-    }
-    else
-    {
-        <h4>List of attendees.</h4>
-        <hr />
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.UserGymClasses.First().applicationUser.Email)
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    foreach (var user in Model.UserGymClasses)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(user => user.UserGymClasses.First().applicationUser.Email)
-                            </td>
-                        </tr>
+        if (Model.UserGymClasses.Count == 0)
+        {
+            <h4>No attendees!</h4>
+        }
+        else
+        {
+            <h4>List of attendees.</h4>
+            <hr />
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UserGymClasses.First().applicationUser.Email)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var user in Model.UserGymClasses)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(user => user.UserGymClasses.First().applicationUser.Email)
+                                </td>
+                            </tr>
+                        }
                     }
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        }
     }
 }
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    @{
+        if (User.Identity is not null && User.Identity.IsAuthenticated)
+        {
+            <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> <span>|</span>
+        }
+    }
     <a asp-action="Index">Back to List</a>
 </div>

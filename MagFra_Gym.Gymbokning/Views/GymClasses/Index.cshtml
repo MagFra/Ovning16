@@ -5,10 +5,14 @@
 }
 
 <h1>Classes</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@{
+    if (User.Identity is not null && User.Identity.IsAuthenticated)
+    {
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+    }
+}
 <table class="table">
     <thead>
         <tr>
@@ -44,10 +48,20 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <a asp-action="BookingToogle" asp-route-id="@item.Id">Book</a> |
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @{
+                        if (User.Identity is not null && User.Identity.IsAuthenticated)
+                        {
+                            <a asp-action="BookingToogle" asp-route-id="@item.Id">Book</a> <span>|</span>
+                            <a asp-action = "Edit" asp-route-id = "@item.Id" > Edit </a > <span>|</span>
+                        }
+                    }
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    @{
+                        if (User.Identity is not null && User.Identity.IsAuthenticated)
+                        {
+                            <span>|</span> <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        }
+                    }
                 </td>
             </tr>
         }
