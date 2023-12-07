@@ -25,6 +25,13 @@ namespace MagFra_Gym.Gymbokning.Controllers
 
         //#####################################################################################
 
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        //#####################################################################################
+
         // GET: GymClasses
         public async Task<IActionResult> Index()
         {

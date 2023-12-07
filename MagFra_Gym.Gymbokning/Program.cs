@@ -45,7 +45,7 @@ namespace MagFra_Gym.Gymbokning
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=GymClasses}/{action=Index}/{id?}");
             app.MapRazorPages();
 
             app.Run();
