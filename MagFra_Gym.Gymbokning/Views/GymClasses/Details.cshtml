@@ -64,10 +64,10 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(user => user.UserGymClasses.First().applicationUser.FullName)
+                                    @Html.DisplayFor(modelItem => user.applicationUser.FullName)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(user => user.UserGymClasses.First().applicationUser.Email)
+                                    @Html.DisplayFor(modelItem => user.applicationUser.Email)
                                 </td>
                             </tr>
                         }
