@@ -37,7 +37,7 @@
     </dl>
 </div>
 @{
-    if (User.Identity is not null && User.Identity.IsAuthenticated)
+    if (User.IsInRole("Admin") || User.IsInRole("User"))
     {
         if (Model.UserGymClasses.Count == 0)
         {
@@ -51,6 +51,9 @@
                 <thead>
                     <tr>
                         <th>
+                            @Html.DisplayNameFor(model => model.UserGymClasses.First().applicationUser.FullName)
+                        </th>
+                        <th>
                             @Html.DisplayNameFor(model => model.UserGymClasses.First().applicationUser.Email)
                         </th>
                     </tr>
@@ -60,6 +63,9 @@
                         foreach (var user in Model.UserGymClasses)
                         {
                             <tr>
+                                <td>
+                                    @Html.DisplayFor(user => user.UserGymClasses.First().applicationUser.FullName)
+                                </td>
                                 <td>
                                     @Html.DisplayFor(user => user.UserGymClasses.First().applicationUser.Email)
                                 </td>
@@ -73,7 +79,7 @@
 }
 <div>
     @{
-        if (User.Identity is not null && User.Identity.IsAuthenticated)
+        if (User.IsInRole("Admin"))
         {
             <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> <span>|</span>
         }

@@ -1,4 +1,5 @@
 using MagFra_Gym.Gymbokning.Data;
+using MagFra_Gym.Gymbokning.Extensions;
 using MagFra_Gym.Gymbokning.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,7 @@ namespace MagFra_Gym.Gymbokning
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,7 @@ namespace MagFra_Gym.Gymbokning
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
+                await app.SeedDataAsync();
             }
             else
             {
