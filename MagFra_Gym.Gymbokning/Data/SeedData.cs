@@ -32,10 +32,10 @@ namespace MagFra_Gym.Gymbokning.Data
             DateTime date4 = DateTime.ParseExact("2024-02-12 09:30:00", "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
 
             var passes = new (string, DateTime, TimeSpan, string)[] {
-                ("Luciastretch", date1 , TimeSpan.FromHours(0.25), "En class för att strecha inför Luciatåget."),
-                ("Svensk jul", date2 , TimeSpan.FromHours(0.25), "Kalle anka och hans vänner önskar en \"Good Jul!\""),
-                ("En gammal klass", date3 , TimeSpan.FromHours(0.25), "En class för för länge sedan."),
-                ("En klass nästa år", date4 , TimeSpan.FromHours(0.25), "En class i februari nästa år."),
+                ("Luciastretch", date1 , TimeSpan.FromMinutes(15), "En class för att strecha inför Luciatåget."),
+                ("Svensk jul", date2 , TimeSpan.FromMinutes(55), "Kalle anka och hans vänner önskar en \"Good Jul!\""),
+                ("En gammal klass", date3 , TimeSpan.FromMinutes(45), "En class för för länge sedan."),
+                ("En klass nästa år", date4 , TimeSpan.FromMinutes(45), "En class i februari nästa år."),
             };
 
             classesId = await AddClassesAsync(passes);
