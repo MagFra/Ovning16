@@ -1,6 +1,7 @@
 using MagFra_Gym.Gymbokning.Data;
 using MagFra_Gym.Gymbokning.Extensions;
 using MagFra_Gym.Gymbokning.Models.Entities;
+using MagFra_Gym.Gymbokning.Models.MapperModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +23,7 @@ namespace MagFra_Gym.Gymbokning
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddAutoMapper(typeof(MapperProfile));
 
             var app = builder.Build();
 

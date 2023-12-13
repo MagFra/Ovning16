@@ -9,6 +9,8 @@ using MagFra_Gym.Gymbokning.Data;
 using MagFra_Gym.Gymbokning.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
+using MagFra_Gym.Gymbokning.Models.ViewModels;
 
 namespace MagFra_Gym.Gymbokning.Controllers
 {
@@ -16,11 +18,13 @@ namespace MagFra_Gym.Gymbokning.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public GymClassesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public GymClassesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         //#####################################################################################
@@ -35,7 +39,21 @@ namespace MagFra_Gym.Gymbokning.Controllers
         // GET: GymClasses
         public async Task<IActionResult> Index()
         {
-            return View(await _context.GymClass.ToListAsync());
+            //var model = await _context.GymClass.Select(Gc => new GymClassViewModel 
+            //{ 
+            //    Id = Gc.Id,
+            //    Name = Gc.Name,
+            //    StartTime = Gc.StartTime,
+            //    Duration = Gc.Duration,
+            //    Description = Gc.Description,
+            //    EndTime = Gc.EndTime,
+            //}).ToListAsync();
+
+            var gymClasses = await _context.GymClass.ToListAsync();
+            var wrappedGymClasses = _mapper.Map<WraperGymClassesViewModel>(gymClasses);
+            var model = wrappedGymClasses.ListOfGymClasses.ToList();
+
+            return View(model);
         }
 
         //#####################################################################################

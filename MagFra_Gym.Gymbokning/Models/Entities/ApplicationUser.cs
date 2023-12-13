@@ -18,7 +18,7 @@ namespace MagFra_Gym.Gymbokning.Models.Entities
 
 
         [Display(Name = "Full name")]
-        public string FullName => FirstName + " " + LastName;
+        public string FullName { get { return $"{FirstName} {LastName}"; } }
         public DateTime TimeOfRegistration { get; set; }
         public ICollection<ApplicationUserGymClass> applicationUserGymClass { get; set; } = new List<ApplicationUserGymClass>();
     }
