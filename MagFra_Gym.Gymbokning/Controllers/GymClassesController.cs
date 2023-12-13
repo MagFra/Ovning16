@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using MagFra_Gym.Gymbokning.Models.ViewModels;
+using MagFra_Gym.Gymbokning.Services;
 
 namespace MagFra_Gym.Gymbokning.Controllers
 {
@@ -19,12 +20,14 @@ namespace MagFra_Gym.Gymbokning.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
+        private readonly IFakeGymClassServices _fakeGymClassServices;
 
-        public GymClassesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IMapper mapper)
+        public GymClassesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IMapper mapper, IFakeGymClassServices fakeGymClassServices)
         {
             _context = context;
             _userManager = userManager;
             _mapper = mapper;
+            _fakeGymClassServices = fakeGymClassServices;
         }
 
         //#####################################################################################
@@ -39,21 +42,7 @@ namespace MagFra_Gym.Gymbokning.Controllers
         // GET: GymClasses
         public async Task<IActionResult> Index()
         {
-            //var model = await _context.GymClass.Select(Gc => new GymClassViewModel 
-            //{ 
-            //    Id = Gc.Id,
-            //    Name = Gc.Name,
-            //    StartTime = Gc.StartTime,
-            //    Duration = Gc.Duration,
-            //    Description = Gc.Description,
-            //    EndTime = Gc.EndTime,
-            //}).ToListAsync();
-
-            var gymClasses = await _context.GymClass.ToListAsync();
-            var wrappedGymClasses = _mapper.Map<WraperGymClassesViewModel>(gymClasses);
-            var model = wrappedGymClasses.ListOfGymClasses.ToList();
-
-            return View(model);
+            return View(await _fakeGymClassServices.GetGymClassesControllersAsynk());
         }
 
         //#####################################################################################

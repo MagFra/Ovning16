@@ -11,7 +11,7 @@ namespace MagFra_Gym.Gymbokning.Models.MapperModels
             CreateMap<GymClass, GymClassViewModel>()
             .ForMember(dest => dest.Attending, from => from.MapFrom<AttendingResolver>());
 
-            CreateMap<IEnumerable<GymClass>, WraperGymClassesViewModel>()
+            CreateMap<IEnumerable<GymClass>, WraperGymClassesModel>()
             .ForMember(dest => dest.ListOfGymClasses, from => from.MapFrom(g => g.ToList()));
         }
     }

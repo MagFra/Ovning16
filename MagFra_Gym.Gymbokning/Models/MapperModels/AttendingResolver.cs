@@ -15,9 +15,10 @@ namespace MagFra_Gym.Gymbokning.Models.MapperModels
         }
         public bool Resolve(GymClass source, GymClassViewModel destination, bool destMember, ResolutionContext context)
         {
-            return source.UserGymClasses is null ? false :
+            var result = source.UserGymClasses is null ? false :
                 source.UserGymClasses.Any(u => u.applicationUserId
                 == _contextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return result;
         }
     }
 }

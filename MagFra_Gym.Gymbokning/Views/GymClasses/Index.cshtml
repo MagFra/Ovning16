@@ -52,7 +52,10 @@
                     @{
                         if (User.Identity is not null && User.Identity.IsAuthenticated)
                         {
-                            <a asp-action="BookingToogle" asp-route-id="@item.Id">Book</a> <span>|</span>
+                            <a asp-action="BookingToogle" asp-route-id="@item.Id"
+                               class="btn @(item.Attending ? "btn-danger" : "btn-success")">
+                                @(item.Attending ? "Cansel" : "Book")
+                            </a> <span>|</span>
                         }
                         if (User.IsInRole("Admin"))
                         {
